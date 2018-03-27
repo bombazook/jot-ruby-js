@@ -1,0 +1,13 @@
+/.bundle/
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/
+/node_modules/
+
+# rspec failure tracking
+.rspec_status
+yarn-error.log
