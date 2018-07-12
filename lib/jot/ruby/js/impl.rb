@@ -1,13 +1,7 @@
-require "jot/ruby/impl/js/version"
-require "jot/ruby"
-require "multi_json"
-require 'execjs'
-
 module Jot
   module Ruby
-    module Impl
-      module Js
-        extend Utils::ImplTools
+    module Js
+      class Impl < ImplBase
         self.registry_key = :js
 
         class << self
@@ -26,12 +20,12 @@ module Jot
           def js_eval(str = nil)
             if block_given?
               val = yield
-              Js.runtime.eval(val)
+              Impl.runtime.eval(val)
             elsif str
-              Js.runtime.eval(str)
+              Impl.runtime.eval(str)
             end
-            rescue ExecJS::ProgramError => e
-              raise Errors::ImplError, e.message
+          rescue ExecJS::ProgramError => e
+            raise Errors::ImplError, e.message
           end
 
           def js_method(method_name, *args)
@@ -65,12 +59,12 @@ module Jot
           def new_serialized_jot_eval(method_name, *args)
             js_eval do
               serialize_op do
-                ["new", js_jot_method(method_name, *args)].join(' ')
+                ['new', js_jot_method(method_name, *args)].join(' ')
               end
             end
           end
 
-          def escape str
+          def escape(str)
             ::JSON.generate(str, quirks_mode: true, max_nesting: false)
           end
 
@@ -84,7 +78,7 @@ module Jot
               when Numeric
                 arg
               when Array
-                "[#{arg.flat_map{|i| transform_args(i)}.join(', ')}]"
+                "[#{arg.flat_map { |i| transform_args(i) }.join(', ')}]"
               else
                 escape(arg)
               end
@@ -93,19 +87,17 @@ module Jot
           end
         end
 
-        module RootMethods
-          include ImplHelpers
+        include ImplHelpers
 
-          Jot::Ruby::ImplRoot::RAW_METHODS.each do |method_name|
-            define_method method_name do |*args|
-              serialized_jot_eval(method_name, *args)
-            end
+        Jot::Ruby::ImplBase::RAW_METHODS.each do |method_name|
+          define_method method_name do |*args|
+            serialized_jot_eval(method_name, *args)
           end
+        end
 
-          Jot::Ruby::ImplRoot::DEFAULT_OPERATIONS.each do |method_name|
-            define_method method_name do |*args|
-              new_serialized_jot_eval(method_name, *args)
-            end
+        Jot::Ruby::ImplBase::DEFAULT_OPERATIONS.each do |method_name|
+          define_method method_name do |*args|
+            new_serialized_jot_eval(method_name, *args)
           end
         end
 

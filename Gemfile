@@ -5,6 +5,7 @@ git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 # Specify your gem's dependencies in jot-ruby-js.gemspec
 gemspec
 
+gem 'byebug'
 gem 'execjs'
 gem 'mini_racer'
 gem "oj"
