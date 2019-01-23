@@ -1,7 +1,7 @@
 module Jot
   module Ruby
     module Js
-      VERSION = '0.1.3'.freeze
+      VERSION = '0.1.4'.freeze
     end
   end
 end

@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
 
   spec.require_paths = ['lib']
   spec.add_dependency 'execjs', '~> 2.7.0'
-  spec.add_dependency 'jot-ruby', '~> 0.1.3'
+  spec.add_dependency 'jot-ruby', '~> 0.1.4'
   spec.add_dependency 'multi_json', '~> 1.13'
 
   spec.add_development_dependency 'bundler', '~> 1.16'
