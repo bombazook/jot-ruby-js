@@ -25,7 +25,7 @@ Or install it yourself as:
 require 'jot/ruby/js'
 
 ```
-then use any operation described at [bombazook/jot-ruby](https://github.com/bombazook/jot-ruby) and [JoshData/jot](https://github.com/JoshData/jot)
+then use any operation described at [JoshData/jot](https://github.com/JoshData/jot)
 
 ## Contributing
 
